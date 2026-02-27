@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Chromia",
+    "slug": "chromia",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0a1a"
+    },
+    "assetBundlePatterns": ["assets/*"],
+    "ios": {
+      "supportsTablet": true,
+      "requireFullScreen": false,
+      "bundleIdentifier": "com.chromia.app",
+      "infoPlist": {
+        "NSPhotoLibraryAddUsageDescription": "Chromia сохраняет ваши раскраски в фотоальбом",
+        "NSPhotoLibraryUsageDescription": "Chromia нужен доступ для сохранения работ"
+      }
+    },
+    "android": {
+      "package": "com.chromia.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0a0a1a"
+      }
+    },
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Chromia сохраняет ваши раскраски в фотоальбом",
+          "savePhotosPermission": "Chromia нужен доступ для сохранения работ"
+        }
+      ]
+    ]
+  }
+}
