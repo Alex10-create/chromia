@@ -20,6 +20,7 @@ export default function ColoringScreen({ layout, catId, imgIdx, onBack }) {
   const [palette, setPalette] = useState('sunset');
   const [tool, setTool] = useState('fill');
   const [showExport, setShowExport] = useState(false);
+  const { sp } = layout;
 
   const { filled, applyFill, undo, redo, canUndo, canRedo, reset } = useHistory({});
   const canvasRef = useRef(null);
@@ -75,19 +76,20 @@ export default function ColoringScreen({ layout, catId, imgIdx, onBack }) {
         catEmoji={cat.emoji}
         imgIdx={imgIdx}
         imgCount={cat.count}
+        sp={sp}
       />
 
       {/* Back button row */}
-      <View style={styles.backRow}>
+      <View style={[styles.backRow, { paddingHorizontal: sp(12, 20) }]}>
         <Pressable onPress={handleBack} style={styles.backBtn}>
-          <Text style={styles.backText}>{"\u2190"} {cat.name}</Text>
+          <Text style={[styles.backText, { fontSize: sp(13, 16) }]}>{"\u2190"} {cat.name}</Text>
         </Pressable>
       </View>
 
       {/* Main content: canvas + palette */}
       <View style={[styles.content, isLandscapeSidebar && styles.contentRow]}>
         {/* Canvas */}
-        <View style={styles.canvasWrap}>
+        <View style={[styles.canvasWrap, { padding: sp(8, 20) }]}>
           <SVGCanvas
             paths={paths}
             filled={filled}
@@ -106,27 +108,28 @@ export default function ColoringScreen({ layout, catId, imgIdx, onBack }) {
           setColor={setColor}
           setTool={setTool}
           horizontal={isLandscapeSidebar}
+          sp={sp}
         />
       </View>
 
       {/* Export Modal */}
       <Modal visible={showExport} transparent animationType="fade">
         <Pressable style={styles.overlay} onPress={() => setShowExport(false)}>
-          <View style={styles.modal}>
-            <Text style={styles.modalIcon}>{"\ud83d\udcbe"}</Text>
-            <Text style={styles.modalTitle}>{"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c"}</Text>
-            <Text style={styles.modalSub}>{"\u0421\u043a\u0430\u0447\u0430\u0439\u0442\u0435 \u0432\u0430\u0448\u0443 \u0440\u0430\u0431\u043e\u0442\u0443 \u0432 \u0432\u044b\u0441\u043e\u043a\u043e\u043c \u043a\u0430\u0447\u0435\u0441\u0442\u0432\u0435"}</Text>
+          <View style={[styles.modal, { maxWidth: sp(300, 420), padding: sp(28, 36) }]}>
+            <Text style={[styles.modalIcon, { fontSize: sp(30, 40) }]}>{"\ud83d\udcbe"}</Text>
+            <Text style={[styles.modalTitle, { fontSize: sp(17, 21) }]}>{"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c"}</Text>
+            <Text style={[styles.modalSub, { fontSize: sp(11, 14) }]}>{"\u0421\u043a\u0430\u0447\u0430\u0439\u0442\u0435 \u0432\u0430\u0448\u0443 \u0440\u0430\u0431\u043e\u0442\u0443 \u0432 \u0432\u044b\u0441\u043e\u043a\u043e\u043c \u043a\u0430\u0447\u0435\u0441\u0442\u0432\u0435"}</Text>
 
-            <Pressable onPress={() => handleExport('png')} style={[styles.exportBtn, styles.exportPng]}>
-              <Text style={styles.exportPngText}>{"\ud83d\udcf7"} PNG {"\u2014"} {"\u0412\u044b\u0441\u043e\u043a\u043e\u0435 \u043a\u0430\u0447\u0435\u0441\u0442\u0432\u043e"}</Text>
+            <Pressable onPress={() => handleExport('png')} style={[styles.exportBtn, styles.exportPng, { padding: sp(13, 18) }]}>
+              <Text style={[styles.exportPngText, { fontSize: sp(14, 17) }]}>{"\ud83d\udcf7"} PNG {"\u2014"} {"\u0412\u044b\u0441\u043e\u043a\u043e\u0435 \u043a\u0430\u0447\u0435\u0441\u0442\u0432\u043e"}</Text>
             </Pressable>
 
-            <Pressable onPress={() => handleExport('jpg')} style={[styles.exportBtn, styles.exportJpg]}>
-              <Text style={styles.exportJpgText}>{"\ud83d\uddbc\ufe0f"} JPG {"\u2014"} {"\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439"}</Text>
+            <Pressable onPress={() => handleExport('jpg')} style={[styles.exportBtn, styles.exportJpg, { padding: sp(13, 18) }]}>
+              <Text style={[styles.exportJpgText, { fontSize: sp(14, 17) }]}>{"\ud83d\uddbc\ufe0f"} JPG {"\u2014"} {"\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439"}</Text>
             </Pressable>
 
             <Pressable onPress={() => setShowExport(false)}>
-              <Text style={styles.closeText}>{"\u0417\u0430\u043a\u0440\u044b\u0442\u044c"}</Text>
+              <Text style={[styles.closeText, { fontSize: sp(12, 15) }]}>{"\u0417\u0430\u043a\u0440\u044b\u0442\u044c"}</Text>
             </Pressable>
           </View>
         </Pressable>
@@ -138,14 +141,13 @@ export default function ColoringScreen({ layout, catId, imgIdx, onBack }) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#0e0e1c',
+    backgroundColor: '#faf6f0',
   },
   backRow: {
-    paddingHorizontal: 12,
     paddingVertical: 4,
   },
   backBtn: { padding: 4 },
-  backText: { fontSize: 13, color: '#f0e6d3', opacity: 0.6 },
+  backText: { color: '#2c2c2c', opacity: 0.6 },
   content: {
     flex: 1,
   },
@@ -156,30 +158,30 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 8,
   },
-  // Export modal
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: 'rgba(0,0,0,0.4)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   modal: {
-    backgroundColor: '#1a1a3e',
+    backgroundColor: '#fff',
     borderRadius: 22,
-    padding: 28,
-    maxWidth: 300,
     width: '88%',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: 'rgba(0,0,0,0.08)',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 8,
   },
-  modalIcon: { fontSize: 30, marginBottom: 10 },
-  modalTitle: { fontSize: 17, color: '#f0e6d3', letterSpacing: 2, marginBottom: 6 },
-  modalSub: { fontSize: 11, color: '#f0e6d3', opacity: 0.45, marginBottom: 22, lineHeight: 18, textAlign: 'center' },
+  modalIcon: { marginBottom: 10 },
+  modalTitle: { color: '#2c2c2c', letterSpacing: 2, marginBottom: 6 },
+  modalSub: { color: '#2c2c2c', opacity: 0.45, marginBottom: 22, lineHeight: 20, textAlign: 'center' },
   exportBtn: {
-    padding: 13,
     paddingHorizontal: 20,
     borderRadius: 12,
     marginBottom: 8,
@@ -187,16 +189,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   exportPng: {
-    backgroundColor: 'rgba(120,200,170,0.15)',
+    backgroundColor: 'rgba(40,160,120,0.1)',
     borderWidth: 1,
-    borderColor: 'rgba(120,200,170,0.3)',
+    borderColor: 'rgba(40,160,120,0.25)',
   },
-  exportPngText: { fontSize: 14, color: '#78c8aa', letterSpacing: 0.5 },
+  exportPngText: { color: '#1a8a5a', letterSpacing: 0.5 },
   exportJpg: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
+    backgroundColor: 'rgba(0,0,0,0.04)',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.08)',
+    borderColor: 'rgba(0,0,0,0.08)',
   },
-  exportJpgText: { fontSize: 14, color: '#f0e6d3', letterSpacing: 0.5 },
-  closeText: { marginTop: 14, fontSize: 12, color: '#f0e6d3', opacity: 0.35 },
+  exportJpgText: { color: '#2c2c2c', letterSpacing: 0.5 },
+  closeText: { marginTop: 14, color: '#2c2c2c', opacity: 0.35 },
 });

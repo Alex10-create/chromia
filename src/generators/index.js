@@ -8,17 +8,19 @@ export { generateNature } from './nature';
 export { generateSea } from './sea';
 export { generateSpace } from './space';
 export { generateHeart } from './heart';
+export { generateCustom } from './custom';
 
 export const CATEGORIES = [
-  { id: "mandalas", name: "\u041c\u0430\u043d\u0434\u0430\u043b\u044b", emoji: "\ud83d\udd8c\ufe0f", gen: "mandala", count: 12, color: "#9b59b6" },
-  { id: "flowers", name: "\u0426\u0432\u0435\u0442\u044b", emoji: "\ud83c\udf38", gen: "flower", count: 12, color: "#e74c3c" },
-  { id: "animals", name: "\u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0435", emoji: "\ud83e\udd81", gen: "animal", count: 12, color: "#f39c12" },
-  { id: "butterflies", name: "\u0411\u0430\u0431\u043e\u0447\u043a\u0438", emoji: "\ud83e\udd8b", gen: "butterfly", count: 10, color: "#1abc9c" },
-  { id: "patterns", name: "\u0423\u0437\u043e\u0440\u044b", emoji: "\u2726", gen: "pattern", count: 10, color: "#3498db" },
-  { id: "nature", name: "\u041f\u0440\u0438\u0440\u043e\u0434\u0430", emoji: "\ud83c\udfde\ufe0f", gen: "nature", count: 10, color: "#27ae60" },
-  { id: "sea", name: "\u041c\u043e\u0440\u0435", emoji: "\ud83c\udf0a", gen: "sea", count: 10, color: "#0077b6" },
-  { id: "space", name: "\u041a\u043e\u0441\u043c\u043e\u0441", emoji: "\ud83e\ude90", gen: "space", count: 8, color: "#6c3483" },
-  { id: "hearts", name: "\u0421\u0435\u0440\u0434\u0435\u0447\u043a\u0438", emoji: "\u2764\ufe0f", gen: "heart", count: 8, color: "#e91e63" },
+  { id: "mandalas", name: "\u041c\u0430\u043d\u0434\u0430\u043b\u044b", emoji: "\ud83d\udd8c\ufe0f", gen: "mandala", count: 24, color: "#9b59b6" },
+  { id: "flowers", name: "\u0426\u0432\u0435\u0442\u044b", emoji: "\ud83c\udf38", gen: "flower", count: 24, color: "#e74c3c" },
+  { id: "animals", name: "\u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0435", emoji: "\ud83e\udd81", gen: "animal", count: 24, color: "#f39c12" },
+  { id: "butterflies", name: "\u0411\u0430\u0431\u043e\u0447\u043a\u0438", emoji: "\ud83e\udd8b", gen: "butterfly", count: 20, color: "#1abc9c" },
+  { id: "patterns", name: "\u0423\u0437\u043e\u0440\u044b", emoji: "\u2726", gen: "pattern", count: 20, color: "#3498db" },
+  { id: "nature", name: "\u041f\u0440\u0438\u0440\u043e\u0434\u0430", emoji: "\ud83c\udfde\ufe0f", gen: "nature", count: 20, color: "#27ae60" },
+  { id: "sea", name: "\u041c\u043e\u0440\u0435", emoji: "\ud83c\udf0a", gen: "sea", count: 20, color: "#0077b6" },
+  { id: "space", name: "\u041a\u043e\u0441\u043c\u043e\u0441", emoji: "\ud83e\ude90", gen: "space", count: 16, color: "#6c3483" },
+  { id: "hearts", name: "\u0421\u0435\u0440\u0434\u0435\u0447\u043a\u0438", emoji: "\u2764\ufe0f", gen: "heart", count: 16, color: "#e91e63" },
+  { id: "test", name: "\u0422\u0435\u0441\u0442", emoji: "\ud83e\uddea", gen: "custom", count: 18, color: "#ff6b35" },
 ];
 
 export const GENERATORS = {
@@ -31,6 +33,7 @@ export const GENERATORS = {
   sea: require('./sea').generateSea,
   space: require('./space').generateSpace,
   heart: require('./heart').generateHeart,
+  custom: require('./custom').generateCustom,
 };
 
 export function getGenerator(genId) {

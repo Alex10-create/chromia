@@ -6,9 +6,10 @@ import { CATEGORIES } from '../generators';
 import { loadGallery } from '../utils/storage';
 
 export default function HomeScreen({ layout, onSelectCategory, onSelectImage }) {
-  const [tab, setTab] = useState('categories'); // 'categories' | 'gallery'
+  const [tab, setTab] = useState('categories');
   const [gallery, setGallery] = useState([]);
   const total = CATEGORIES.reduce((s, c) => s + c.count, 0);
+  const { sp } = layout;
 
   useEffect(() => {
     loadGallery().then(setGallery);
@@ -17,42 +18,43 @@ export default function HomeScreen({ layout, onSelectCategory, onSelectImage }) 
   return (
     <View style={styles.root}>
       {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>CHROMIA</Text>
-        <Text style={styles.subtitle}>
+      <View style={[styles.header, { paddingTop: sp(40, 56) }]}>
+        <Text style={[styles.title, { fontSize: sp(40, 52) }]}>CHROMIA</Text>
+        <Text style={[styles.subtitle, { fontSize: sp(10, 13) }]}>
           {"\u0420\u0430\u0441\u043a\u0440\u0430\u0441\u044c \u0441\u0432\u043e\u0439 \u043f\u043e\u043a\u043e\u0439"} {"\u00b7"} {total} {"\u043a\u0430\u0440\u0442\u0438\u043d\u043e\u043a"}
         </Text>
       </View>
 
       {/* Tabs */}
-      <View style={styles.tabs}>
-        <Pressable onPress={() => setTab('categories')} style={[styles.tab, tab === 'categories' && styles.tabActive]}>
-          <Text style={[styles.tabText, tab === 'categories' && styles.tabTextActive]}>{"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438"}</Text>
+      <View style={[styles.tabs, { gap: sp(16, 24), paddingVertical: sp(10, 14) }]}>
+        <Pressable onPress={() => setTab('categories')} style={[styles.tab, { paddingHorizontal: sp(16, 22), paddingVertical: sp(6, 10) }, tab === 'categories' && styles.tabActive]}>
+          <Text style={[styles.tabText, { fontSize: sp(12, 15) }, tab === 'categories' && styles.tabTextActive]}>{"\u041a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u0438"}</Text>
         </Pressable>
-        <Pressable onPress={() => { setTab('gallery'); loadGallery().then(setGallery); }} style={[styles.tab, tab === 'gallery' && styles.tabActive]}>
-          <Text style={[styles.tabText, tab === 'gallery' && styles.tabTextActive]}>
+        <Pressable onPress={() => { setTab('gallery'); loadGallery().then(setGallery); }} style={[styles.tab, { paddingHorizontal: sp(16, 22), paddingVertical: sp(6, 10) }, tab === 'gallery' && styles.tabActive]}>
+          <Text style={[styles.tabText, { fontSize: sp(12, 15) }, tab === 'gallery' && styles.tabTextActive]}>
             {"\u041c\u043e\u0438 \u0440\u0430\u0431\u043e\u0442\u044b"} {gallery.length > 0 ? `(${gallery.length})` : ''}
           </Text>
         </Pressable>
       </View>
 
       {tab === 'categories' ? (
-        <ScrollView contentContainerStyle={styles.list}>
+        <ScrollView contentContainerStyle={[styles.list, { maxWidth: sp(520, 800), padding: sp(14, 22) }]}>
           {CATEGORIES.map(cat => (
             <CategoryCard
               key={cat.id}
               category={cat}
               onPress={() => onSelectCategory(cat.id)}
+              sp={sp}
             />
           ))}
           {/* AI placeholder */}
-          <View style={styles.aiCard}>
-            <View style={styles.aiIcon}>
-              <Text style={{ fontSize: 20 }}>{"\u2728"}</Text>
+          <View style={[styles.aiCard, { gap: sp(13, 18), padding: sp(13, 18), paddingHorizontal: sp(16, 22) }]}>
+            <View style={[styles.aiIcon, { width: sp(46, 60), height: sp(46, 60) }]}>
+              <Text style={{ fontSize: sp(20, 26) }}>{"\u2728"}</Text>
             </View>
             <View>
-              <Text style={styles.aiTitle}>AI-{"\u0413\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f"}</Text>
-              <Text style={styles.aiSub}>{"\u0421\u043a\u043e\u0440\u043e"}</Text>
+              <Text style={[styles.aiTitle, { fontSize: sp(14, 18) }]}>AI-{"\u0413\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f"}</Text>
+              <Text style={[styles.aiSub, { fontSize: sp(10, 13) }]}>{"\u0421\u043a\u043e\u0440\u043e"}</Text>
             </View>
           </View>
         </ScrollView>
@@ -71,20 +73,17 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   header: {
     alignItems: 'center',
-    paddingTop: 40,
     paddingBottom: 12,
   },
   title: {
-    fontSize: 40,
     fontWeight: '700',
     letterSpacing: 8,
-    color: '#f0e6d3',
+    color: '#2c2c2c',
     textTransform: 'uppercase',
   },
   subtitle: {
-    fontSize: 10,
     letterSpacing: 5,
-    color: '#f0e6d3',
+    color: '#2c2c2c',
     opacity: 0.4,
     marginTop: 4,
     textTransform: 'uppercase',
@@ -92,22 +91,17 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 16,
-    paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.05)',
+    borderBottomColor: 'rgba(0,0,0,0.06)',
   },
   tab: {
-    paddingHorizontal: 16,
-    paddingVertical: 6,
     borderRadius: 8,
   },
   tabActive: {
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: 'rgba(0,0,0,0.06)',
   },
   tabText: {
-    fontSize: 12,
-    color: '#f0e6d3',
+    color: '#2c2c2c',
     opacity: 0.4,
     letterSpacing: 1,
   },
@@ -115,36 +109,29 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   list: {
-    padding: 14,
     paddingTop: 10,
-    maxWidth: 520,
     alignSelf: 'center',
     width: '100%',
   },
   aiCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 13,
-    padding: 13,
-    paddingHorizontal: 16,
     marginTop: 12,
     borderRadius: 13,
     borderWidth: 1,
     borderStyle: 'dashed',
-    borderColor: 'rgba(120,80,200,0.16)',
-    backgroundColor: 'rgba(120,80,200,0.04)',
+    borderColor: 'rgba(120,80,200,0.2)',
+    backgroundColor: 'rgba(120,80,200,0.05)',
     opacity: 0.4,
   },
   aiIcon: {
-    width: 46,
-    height: 46,
     borderRadius: 11,
     backgroundColor: 'rgba(120,80,200,0.1)',
     borderWidth: 1,
-    borderColor: 'rgba(120,80,200,0.22)',
+    borderColor: 'rgba(120,80,200,0.25)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  aiTitle: { fontSize: 14, color: '#f0e6d3', letterSpacing: 1 },
-  aiSub: { fontSize: 10, color: '#f0e6d3', opacity: 0.5, marginTop: 1 },
+  aiTitle: { color: '#2c2c2c', letterSpacing: 1 },
+  aiSub: { color: '#2c2c2c', opacity: 0.5, marginTop: 1 },
 });

@@ -3,7 +3,7 @@ import { Pressable, View, Text, StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { getGenerator } from '../generators';
 
-export default function ImageThumbnail({ index, genId, categoryColor, hasProgress: hasProg, onPress }) {
+export default function ImageThumbnail({ index, genId, categoryColor, hasProgress: hasProg, onPress, sp }) {
   const paths = useMemo(() => {
     const gen = getGenerator(genId);
     return gen ? gen(index) : [];
@@ -14,6 +14,7 @@ export default function ImageThumbnail({ index, genId, categoryColor, hasProgres
       onPress={onPress}
       style={({ pressed }) => [
         styles.card,
+        { padding: sp(7, 12), borderRadius: sp(13, 16) },
         pressed && styles.pressed,
       ]}
     >
@@ -23,14 +24,14 @@ export default function ImageThumbnail({ index, genId, categoryColor, hasProgres
             key={r.id}
             d={r.d}
             fill={r.fill || 'none'}
-            stroke={r.stroke || `${categoryColor}77`}
+            stroke={'rgba(0,0,0,1)'}
             strokeWidth={r.strokeWidth || 1.1}
             strokeLinejoin="round"
           />
         ))}
       </Svg>
-      <Text style={styles.number}>#{index + 1}</Text>
-      {hasProg && <View style={[styles.dot, { backgroundColor: categoryColor }]} />}
+      <Text style={[styles.number, { fontSize: sp(8, 11) }]}>#{index + 1}</Text>
+      {hasProg && <View style={[styles.dot, { width: sp(8, 12), height: sp(8, 12), borderRadius: sp(4, 6), backgroundColor: categoryColor }]} />}
     </Pressable>
   );
 }
@@ -38,13 +39,11 @@ export default function ImageThumbnail({ index, genId, categoryColor, hasProgres
 const styles = StyleSheet.create({
   card: {
     aspectRatio: 1,
-    borderRadius: 13,
-    backgroundColor: 'rgba(255,255,255,0.022)',
+    backgroundColor: '#faf6f0',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.045)',
+    borderColor: 'rgba(0,0,0,0.08)',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 7,
   },
   pressed: {
     opacity: 0.7,
@@ -53,22 +52,17 @@ const styles = StyleSheet.create({
   svg: {
     width: '100%',
     height: '100%',
-    opacity: 0.5,
   },
   number: {
     position: 'absolute',
     bottom: 3,
     right: 5,
-    fontSize: 8,
-    color: '#f0e6d3',
-    opacity: 0.22,
+    color: '#333',
+    opacity: 0.25,
   },
   dot: {
     position: 'absolute',
     top: 6,
     right: 6,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
   },
 });

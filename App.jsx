@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './src/screens/HomeScreen';
 import GalleryScreen from './src/screens/GalleryScreen';
@@ -27,7 +27,8 @@ export default function App() {
 
   return (
     <View style={styles.root} onLayout={layout.onLayout}>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
+      <SafeAreaView style={styles.safe}>
       {screen === 'home' && (
         <HomeScreen
           layout={layout}
@@ -51,6 +52,7 @@ export default function App() {
           onBack={() => goGallery(catId)}
         />
       )}
+      </SafeAreaView>
     </View>
   );
 }
@@ -58,6 +60,10 @@ export default function App() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#0a0a1a',
+    backgroundColor: '#faf6f0',
+  },
+  safe: {
+    flex: 1,
+    paddingTop: 20,
   },
 });
